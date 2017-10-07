@@ -41,8 +41,9 @@ public final class BitsoAdapters {
     // Adapt to XChange DTOs
     Balance mxnBalance = new Balance(Currency.MXN, bitsoBalance.getMxnBalance(), bitsoBalance.getMxnAvailable(), bitsoBalance.getMxnReserved());
     Balance btcBalance = new Balance(Currency.BTC, bitsoBalance.getBtcBalance(), bitsoBalance.getBtcAvailable(), bitsoBalance.getBtcReserved());
+    Balance xrpBalance = new Balance(Currency.XRP, bitsoBalance.getXrpBalance(), bitsoBalance.getXrpAvailable(), bitsoBalance.getXrpReserved());
 
-    return new Wallet(mxnBalance, btcBalance);
+    return new Wallet(mxnBalance, btcBalance, xrpBalance);
   }
 
   public static OrderBook adaptOrderBook(BitsoOrderBook bitsoOrderBook, CurrencyPair currencyPair, int timeScale) {

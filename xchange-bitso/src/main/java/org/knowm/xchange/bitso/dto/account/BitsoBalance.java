@@ -13,29 +13,38 @@ public final class BitsoBalance {
 
   private final BigDecimal btcBalance;
 
+  private final BigDecimal xrpBalance;
+
   private final BigDecimal mxnReserved;
 
   private final BigDecimal btcReserved;
+
+  private final BigDecimal xrpReserved;
 
   private final BigDecimal mxnAvailable;
 
   private final BigDecimal btcAvailable;
 
+  private final BigDecimal xrpAvailable;
+
   private final BigDecimal fee;
 
   private final String error;
 
-  public BitsoBalance(@JsonProperty("mxn_balance") BigDecimal mxnBalance, @JsonProperty("btc_balance") BigDecimal btcBalance,
-      @JsonProperty("mxn_reserved") BigDecimal mxnReserved, @JsonProperty("btc_reserved") BigDecimal btcReserved,
-      @JsonProperty("mxn_available") BigDecimal mxnAvailable, @JsonProperty("btc_available") BigDecimal btcAvailable,
+  public BitsoBalance(@JsonProperty("mxn_balance") BigDecimal mxnBalance, @JsonProperty("btc_balance") BigDecimal btcBalance, @JsonProperty("xrp_balance") BigDecimal xrpBalance,
+      @JsonProperty("mxn_reserved") BigDecimal mxnReserved, @JsonProperty("btc_reserved") BigDecimal btcReserved, @JsonProperty("xrp_reserved") BigDecimal xrpReserved,
+      @JsonProperty("mxn_available") BigDecimal mxnAvailable, @JsonProperty("btc_available") BigDecimal btcAvailable, @JsonProperty("xrp_available") BigDecimal xrpAvailable,
       @JsonProperty("fee") BigDecimal fee, @JsonProperty("error") String error) {
 
     this.mxnBalance = mxnBalance;
     this.btcBalance = btcBalance;
+    this.xrpBalance = xrpBalance;
     this.mxnReserved = mxnReserved;
     this.btcReserved = btcReserved;
+    this.xrpReserved = xrpReserved;
     this.mxnAvailable = mxnAvailable;
     this.btcAvailable = btcAvailable;
+    this.xrpAvailable = xrpAvailable;
     this.fee = fee;
     this.error = error;
   }
@@ -68,6 +77,18 @@ public final class BitsoBalance {
   public BigDecimal getBtcAvailable() {
 
     return btcAvailable;
+  }
+
+  public BigDecimal getXrpBalance() {
+    return xrpBalance;
+  }
+
+  public BigDecimal getXrpReserved() {
+    return xrpReserved;
+  }
+
+  public BigDecimal getXrpAvailable() {
+    return xrpAvailable;
   }
 
   public BigDecimal getFee() {

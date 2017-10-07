@@ -41,8 +41,9 @@ public class BitstampDigest extends BaseParamsDigest {
 
     Mac mac256 = getMac();
     mac256.update(restInvocation.getParamValue(FormParam.class, "nonce").toString().getBytes());
-    mac256.update(clientId.getBytes());
-    mac256.update(apiKey.getBytes());
+    mac256.update(restInvocation.getHttpMethod().getBytes());
+    mac256.update(restInvocation.getMethodPath().getBytes());
+    mac256.update(restInvocation.getRequestBody().getBytes());
 
     return String.format("%064x", new BigInteger(1, mac256.doFinal())).toUpperCase();
   }

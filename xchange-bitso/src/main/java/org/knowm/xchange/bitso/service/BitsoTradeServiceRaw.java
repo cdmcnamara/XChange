@@ -25,8 +25,8 @@ public class BitsoTradeServiceRaw extends BitsoBaseService {
 
     super(exchange);
     this.bitsoAuthenticated = RestProxyFactory.createProxy(BitsoAuthenticated.class, exchange.getExchangeSpecification().getSslUri());
-    this.signatureCreator = BitsoDigest.createInstance(exchange.getExchangeSpecification().getSecretKey(),
-        exchange.getExchangeSpecification().getUserName(), exchange.getExchangeSpecification().getApiKey());
+    this.signatureCreator = BitsoDigest.createInstance(exchange.getExchangeSpecification().getSecretKey(), exchange.getExchangeSpecification()
+        .getApiKey(), exchange.getNonceFactory());
   }
 
   public BitsoOrder[] getBitsoOpenOrders() throws IOException {

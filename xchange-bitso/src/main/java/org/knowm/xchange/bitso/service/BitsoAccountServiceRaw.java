@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitso.BitsoAuthenticated;
+import org.knowm.xchange.bitso.BitsoAuthenticatedV3;
 import org.knowm.xchange.bitso.dto.account.BitsoBalance;
 import org.knowm.xchange.bitso.dto.account.BitsoDepositAddress;
+import org.knowm.xchange.bitso.dto.account.BitsoFees;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.exceptions.ExchangeException;
 
@@ -16,13 +18,15 @@ public class BitsoAccountServiceRaw extends BitsoBaseService {
 
   private final BitsoDigest signatureCreator;
   private final BitsoAuthenticated bitsoAuthenticated;
+  private final BitsoAuthenticatedV3 bitsoAuthenticatedV3;
 
   protected BitsoAccountServiceRaw(Exchange exchange) {
     super(exchange);
 
     this.bitsoAuthenticated = RestProxyFactory.createProxy(BitsoAuthenticated.class, exchange.getExchangeSpecification().getSslUri());
-    this.signatureCreator = BitsoDigest.createInstance(exchange.getExchangeSpecification().getSecretKey(),
-        exchange.getExchangeSpecification().getUserName(), exchange.getExchangeSpecification().getApiKey());
+    this.bitsoAuthenticatedV3 = RestProxyFactory.createProxy(BitsoAuthenticatedV3.class, exchange.getExchangeSpecification().getSslUri());
+    this.signatureCreator = BitsoDigest.createInstance(exchange.getExchangeSpecification().getSecretKey(), exchange.getExchangeSpecification()
+        .getApiKey(), exchange.getNonceFactory());
   }
 
   public BitsoBalance getBitsoBalance() throws IOException {
@@ -34,6 +38,16 @@ public class BitsoAccountServiceRaw extends BitsoBaseService {
     }
     return bitsoBalance;
   }
+
+  public BitsoFees getBitsoFees() throws IOException {
+
+    BitsoFees bitsoFees = bitsoAuthenticatedV3.getFees(signatureCreator);
+    if (bitsoFees.getError() != null) {
+      throw new ExchangeException("Error getting fees. " + bitsoFees.getError());
+    }
+    return bitsoFees;
+  }
+
 
   public String withdrawBitsoFunds(BigDecimal amount, final String address) throws IOException {
 

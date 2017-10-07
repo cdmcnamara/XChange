@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>xchange-bitso</artifactId>
+    <version>4.3.1-SNAPSHOT</version>
 
     <name>XChange Bitso</name>
     <description>XChange implementation for the Bitso Exchange</description>
